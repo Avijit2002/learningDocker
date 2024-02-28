@@ -1,8 +1,13 @@
 // --- DOCKER --- //
 
+// 3 parts - CLI, Engine, registry
+// Engine or deamon is the main part...CLI is used to interact with deamon
+// Registry (eg dockerhub, AWS registry) similar to github but it store images, not source code
+
 // IMAGES //
 
 // - Images are similar to CD (a copy of software).
+// - It is a snapshot of filesystem, codebase,dependencies, networks, and system
 // - We can get images from docker hub
 // - images don't consists as a single image, it is composed of layers. on docker pull command all the layers are downloaded
 
@@ -61,3 +66,22 @@
 // container here is called services
 // all services in docker compose file shares same network automatically
 // ctrl+space shows awailable options in vs code
+
+// CREATING IMAGE
+// 
+// Docker File---
+
+// FROM node:20  // base image
+// WORKDIR /usr/app  // container is a mini computer so specify path
+// COPY . .   // copy all files present to working directory of container
+
+// note: never put node_modules inside image. run npm install in the container. use dockerignore file
+
+// RUN npm install
+// EXPOSE 3000
+
+// all above is used to create image
+
+// CMD["node","index.js"]  // Difference between CMD and RUN is CMD will execute when container is running
+
+// docker build . -t test_app  // here -t is tag and . is current directory
