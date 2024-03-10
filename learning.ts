@@ -85,3 +85,5 @@
 // CMD["node","index.js"]  // Difference between CMD and RUN is CMD will execute when container is running
 
 // docker build . -t test_app  // here -t is tag and . is current directory
+
+// docker run --env-file <env_file_name> <imageName>
