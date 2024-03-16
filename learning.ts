@@ -91,6 +91,8 @@
 
 // docker build . -t test_app  // here -t is tag and . is current directory
 
+// docker run --env-file <env_file_name> <imageName>
+
 
 // ENVIRONMENT VARIBLES
 
