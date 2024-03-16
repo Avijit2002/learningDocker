@@ -84,4 +84,59 @@
 
 // CMD["node","index.js"]  // Difference between CMD and RUN is CMD will execute when container is running
 
+// Each line in docker file is a layer. docker builts layerwise and cache it after first build.
+// if any layer changes between 2 builds then all the layers below the changed layer will be rebuild.
+// We can optimize build time and build size
+
+
 // docker build . -t test_app  // here -t is tag and . is current directory
+
+
+// ENVIRONMENT VARIBLES
+
+// Don't put it in dockerfile
+// pass them while running image
+// OR pass the .env file while running image 
+
+
+// MORE COMMANDS
+
+// - docker exec <container> command - used to execute commands inside container
+// - docker exec <container> ls /path
+// - docker exec -it <container> /bin/bash - opens shell - -it means interactive mode that gives complete access
+
+
+// LAYERS IN DOCKER
+
+// In Docker, layers are a fundamental part of the image architecture that allows Docker to be efficient, fast, and portable.
+// A Docker image is essentially built up from a series of layers, each representing a set of differences from the previous layer.
+
+// How layers are made - 
+// Base Layer: The starting point of an image, typically an operating system (OS) like Ubuntu, Alpine, or any other base image specified in a Dockerfile.
+// Instruction Layers: Each command in a Dockerfile creates a new layer in the image. These include instructions like RUN, COPY, which modify the filesystem by installing packages, copying files from the host to the container, or making other changes. Each of these modifications creates a new layer on top of the base layer.
+// Reusable & Shareable: Layers are cached and reusable across different images, which makes building and sharing images more efficient. If multiple images are built from the same base image or share common instructions, they can reuse the same layers, reducing storage space and speeding up image downloads and builds.
+// Immutable: Once a layer is created, it cannot be changed. If a change is made, Docker creates a new layer that captures the difference. This immutability is key to Docker's reliability and performance, as unchanged layers can be shared across images and containers.
+
+// Points:
+// 1) During rebuild if one layer is changed then all the layers fater that will be rebuild again
+// 2) So try to put the things that changes frequently as low as possible
+// 3) If we put the things that changes frequently on top then all the layers below it will rebuild even if it is not changed  
+
+
+// OPTIMIZED DOCKER FILE
+
+// FROM node:20
+
+// WORKDIR /usr/src/app
+
+// COPY package* .
+// COPY ./prisma .
+    
+// RUN npm install
+// RUN npx prisma generate
+
+// COPY . .
+
+// EXPOSE 3000
+
+// CMD ["node", "dist/index.js", ]
